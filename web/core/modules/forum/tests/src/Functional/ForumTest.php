@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\forum\Functional;
 
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Entity\EntityInterface;
@@ -18,6 +19,8 @@ use Drupal\Tests\BrowserTestBase;
  * consistency in the database.
  *
  * @group forum
+ * @group legacy
+ * @group #slow
  */
 class ForumTest extends BrowserTestBase {
 
@@ -133,7 +136,7 @@ class ForumTest extends BrowserTestBase {
   /**
    * Tests forum functionality through the admin and user interfaces.
    */
-  public function testForum() {
+  public function testForum(): void {
     // Check that the basic forum install creates a default forum topic
     $this->drupalGet('/forum');
     // Look for the "General discussion" default forum
@@ -272,7 +275,7 @@ class ForumTest extends BrowserTestBase {
    * Verifies that forum nodes are not created without choosing "forum" from the
    * select list.
    */
-  public function testAddOrphanTopic() {
+  public function testAddOrphanTopic(): void {
     // Must remove forum topics to test creating orphan topics.
     $vid = $this->config('forum.settings')->get('vocabulary');
     $tids = \Drupal::entityQuery('taxonomy_term')
@@ -521,7 +524,7 @@ class ForumTest extends BrowserTestBase {
   /**
    * Tests a forum with a new post displays properly.
    */
-  public function testForumWithNewPost() {
+  public function testForumWithNewPost(): void {
     // Log in as the first user.
     $this->drupalLogin($this->adminUser);
     // Create a forum container.
@@ -597,7 +600,7 @@ class ForumTest extends BrowserTestBase {
 
     // Retrieve node object, ensure that the topic was created and in the proper forum.
     $node = $this->drupalGetNodeByTitle($title);
-    $this->assertNotNull($node, new FormattableMarkup('Node @title was loaded', ['@title' => $title]));
+    $this->assertNotNull($node, "Node $title was loaded");
     $this->assertEquals($tid, $node->taxonomy_forums->target_id, 'Saved forum topic was in the expected forum');
 
     // View forum topic.
@@ -733,7 +736,7 @@ class ForumTest extends BrowserTestBase {
   /**
    * Evaluate whether "Add new Forum topic" button is present or not.
    */
-  public function testForumTopicButton() {
+  public function testForumTopicButton(): void {
     $this->drupalLogin($this->adminUser);
 
     // Validate that link doesn't exist on the forum container page.

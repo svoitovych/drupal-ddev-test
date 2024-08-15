@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\system\Unit\Menu;
 
 use Drupal\Core\Access\AccessResult;
@@ -97,7 +99,7 @@ class MenuLinkTreeTest extends UnitTestCase {
    *
    * @dataProvider providerTestBuildCacheability
    */
-  public function testBuildCacheability($description, $tree, $expected_build, $access, array $access_cache_contexts = []) {
+  public function testBuildCacheability($description, $tree, $expected_build, $access, array $access_cache_contexts = []): void {
     if ($access !== NULL) {
       $access->addCacheContexts($access_cache_contexts);
     }
@@ -113,7 +115,7 @@ class MenuLinkTreeTest extends UnitTestCase {
    *
    * @see testBuildCacheability
    */
-  public function providerTestBuildCacheability() {
+  public static function providerTestBuildCacheability() {
     $base_expected_build_empty = [
       '#cache' => [
         'contexts' => [],
