@@ -17,5 +17,5 @@ node_modules/
 .idea
 
 # Local documentation directory.
-#/.editorconfig
-#/.gitattributes
+/.editorconfig
+/.gitattributes
